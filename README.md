@@ -14,7 +14,7 @@
 
 按照上面的教程，下载客户端软件，记住购买后的隧道Token值，
 
-![隧道](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/隧道.png)进入到下载的natapp脚本目录启动服务
+![隧道](images/隧道.png)进入到下载的natapp脚本目录启动服务
 
 ```
 ./natapp -authtoken=XXXXXX
@@ -22,7 +22,7 @@
 
 启动成功便得到以下结果
 
-![内网穿透打开服务结果](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/内网穿透打开服务结果.png)
+![内网穿透打开服务结果](images/内网穿透打开服务结果.png)
 
 Forwarding后面的IP地址便是映射的公网IP，映射的端口根据对隧道的具体配置，可以自由修改
 
@@ -62,11 +62,11 @@ if __name__ == '__main__':
 
 之后直接终端执行 **python main.py**. 默认端口号位80 启动服务后终端出现如下结果
 
-![image1](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/image1.png)
+![image1](images/image1.png)
 
 打开浏览器，输入本地IP地址加端口号或者实现了内网穿透的话直接打开映射的外网IP会显示 "hello, this is handle view" 到此服务配置成功
 
-![内网穿透后用公网IP访问](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/内网穿透后用公网IP访问.png)
+![内网穿透后用公网IP访问](images/内网穿透后用公网IP访问.png)
 
 ### 2.2注册公众号
 
@@ -76,13 +76,13 @@ if __name__ == '__main__':
 
 1） 公众平台官网登录之后，找到“基本配置”菜单栏
 
-![开发者配置1](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/开发者配置1.png)
+![开发者配置1](images/开发者配置1.png)
 
-![开发者配置2](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/开发者配置2.jpeg)
+![开发者配置2](images/开发者配置2.jpeg)
 
 2） 填写配置 url填写：http://[外网IP]/wx 。外网IP设置为第一步配置的内网穿透后的IP地址。 http的端口号固定使用80，不可填写其他。 Token：自主设置，这个token与公众平台wiki中常提的access_token不是一回事。这个token只用于验证开发者服务器。
 
-![开发者配置3](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/开发者配置3.png)
+![开发者配置3](images/开发者配置3.png)
 
 3） 现在选择提交肯定是验证token失败，因为还需要完成代码逻辑。新增handle.py，改动原先main.py文件
 
@@ -139,7 +139,7 @@ from handle import Handle
 
 提交成功并启动后显示如下
 
-## ![服务器配置启用](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/服务器配置启用.png)
+## ![服务器配置启用](images/服务器配置启用.png)
 
 ### 2.4实现基本的消息对接，你问我答
 
@@ -207,7 +207,7 @@ from handle import Handle
 
 **实现流程图**
 
-## ![实现流程图](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/实现流程图.png)
+## ![实现流程图](images/实现流程图.png)
 
 #### 2.4.3 代码实现
 
@@ -391,7 +391,7 @@ class ImageMsg(Msg):
 python main.py 80
 ```
 
-启动后![启动最终服务](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/启动最终服务.png)
+启动后![启动最终服务](images/启动最终服务.png)
 
 ### 2.5 在线接口测试
 
@@ -399,15 +399,15 @@ python main.py 80
 
 在线测试目的在于测试开发者代码逻辑是否有误、是否符合预期。即便测试成功也不会发送内容给粉丝。所以可以随意测试。
 
-![测试截图1](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/测试截图1.png)
+![测试截图1](images/测试截图1.png)
 
 检查问题显示请求成功便没有问题
 
-![测试截图1](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/测试截图2.png)
+![测试截图1](images/测试截图2.png)
 
 也可以直接在公众号中测试
 
-![image-20210516162849573](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/微信对话测试.png)
+![image-20210516162849573](images/微信对话测试.png)
 
 
 
@@ -505,7 +505,7 @@ python main.py 80
 
 之后进入到公众号中就可以进行对话了，
 
-![简单测试](/Volumes/Work/Wechat_ChatBot/WeChat_demo/images/chattest.jpg)
+![简单测试](images/chattest.jpg)
 
 目前的配置暂时还不能处理图片消息，以及配置公众号的菜单栏(微信公共号启用服务器配置会与自定义菜单栏冲突，如果想要两个功能都存在，则需要自己通过代码配置菜单栏，这在[开启公众号开发着模式入门指引文档](https://developers.weixin.qq.com/doc/offiaccount/Getting_Started/Getting_Started_Guide.html)中有详细教程)。之后有时间回尝试将菜单栏的功能也添加进去，并加入图片消息的支持
 
