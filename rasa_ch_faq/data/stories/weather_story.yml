@@ -1,0 +1,77 @@
+
+version: "2.0"
+stories:
+- story: 天气/地点+询问时间
+  steps:
+  - intent: request_weather
+    entities:
+    - date_time: 今天
+  - slot_was_set:
+    - date_time: 今天
+  - action: action_answer_weatherinfo
+
+- story: 天气/地点 + 询问时间
+  steps:
+  - intent: request_weather
+    entities:
+    - location_city: 上海
+  - slot_was_set:
+    - location_city: 上海
+  - action: action_answer_weatherinfo
+
+
+
+- story: 天气/时间/地点+信息齐全 +完成后继续对话 信息 datetime
+  steps:
+  - intent: request_weather
+    entities:
+    - location_city: 杭州
+    - date_time: 今天
+  - slot_was_set:
+    - date_time: 今天
+  - slot_was_set:
+    - location_city: 杭州
+  - action: action_answer_weatherinfo
+  - intent: inform_datetime
+    entities:
+    - date_time: 明天
+  - slot_was_set:
+    - date_time: 明天
+  - action: action_answer_weatherinfo
+
+- story: 天气/时间/地点+信息齐全 +完成后继续对话 信息 location
+  steps:
+  - intent: request_weather
+    entities:
+    - location_city: 杭州
+    - date_time: 今天
+  - slot_was_set:
+    - date_time: 今天
+  - slot_was_set:
+    - location_city: 杭州
+  - action: action_answer_weatherinfo
+  - intent: inform_location
+    entities:
+    - location_city: 北京
+  - slot_was_set:
+    - location_city: 北京
+  - action: action_answer_weatherinfo
+
+
+
+- story: 天气/地点（意图为inform_location）+询问时间 + 继续进行该对话
+  steps:
+  - intent: inform_location
+    entities:
+    - location_city: 上海
+  - slot_was_set:
+    - location_city: 上海
+  - action: action_answer_weatherinfo
+  - intent: inform_datetime
+    entities:
+    - date_time: 明天
+  - slot_was_set:
+    - date_time: 明天
+  - action: action_answer_weatherinfo
+
+

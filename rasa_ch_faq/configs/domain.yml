@@ -1,0 +1,251 @@
+version: "2.0"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - whoareyou
+  - whattodo
+  - thanks
+  - stop
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - rasa_faq
+  - 再问一次
+  - 找饭店
+  - inform
+  - 搜动漫
+  - 看图片
+  - 查币
+  - 试试按钮
+  - chitchat
+  - request_datetime #询问日期(年月)
+  - request_weekday # 询问周几
+  - request_time # 询问时间
+  - request_weather # 询问天气
+  - inform_location # 确认地点名称
+  - inform_datetime # 确认日期的意图
+
+actions:
+  - validate_饭店_form
+  - validate_搜动漫_form
+  - action_clear_饭店_form_slots
+  - action_find_img
+  - action_search_anime_img
+  - action_search_coin_history
+  - action_default_fallback #回退函数
+  - action_answer_requestdatetime # 回复询问日期的Action
+  - action_answer_requestweekday # 回复询问周几的Action
+  - action_answer_time # 回复询问时间的Action
+  - action_answer_weatherinfo
+  - utter_rasa_faq
+  - utter_answer_affirm
+  - utter_answer_deny
+  - utter_answer_goodbye
+  - utter_answer_greet
+  - utter_answer_thanks
+  - utter_answer_whattodo
+  - utter_answer_whoareyou
+  - utter_chitchat
+  - utter_ask_continue
+  - utter_noworries
+  - utter_ask_date_time # 询问日期
+  - utter_ask_location_city # 询问地点
+  - utter_default
+
+entities:
+  - location_city # 地点城市槽位 用于地点规划和天气查询
+  - date_time # 日期时间
+  - cuisine
+  - number
+  - feedback
+  - seating
+  - look_img
+  - coin_name
+
+forms:
+  饭店_form:
+    cuisine:
+      - type: from_entity
+        entity: cuisine
+        not_intent: faq
+    num_people:
+      - type: from_entity
+        entity: number
+        intent: [inform, 找饭店]
+    outdoor_seating:
+      - type: from_entity
+        entity: seating
+      - type: from_intent
+        intent: affirm
+        value: true
+      - type: from_intent
+        intent: deny
+        value: false
+    preferences:
+      - type: from_intent
+        intent: deny
+        value: no additional preferences
+      - type: from_text
+        not_intent: affirm
+    feedback:
+      - type: from_entity
+        entity: feedback
+      - type: from_text
+
+  搜动漫_form:
+    img:
+      - type: from_text
+
+
+slots:
+  cuisine:
+    type: text
+    influence_conversation: false
+    auto_fill: false
+  num_people:
+    type: float
+    influence_conversation: false
+    auto_fill: false
+  outdoor_seating:
+    type: text
+    influence_conversation: false
+    auto_fill: false
+  preferences:
+    type: text
+    influence_conversation: false
+    auto_fill: false
+  feedback:
+    type: text
+    influence_conversation: false
+    auto_fill: false
+  requested_slot:
+    type: text
+    influence_conversation: false
+  img:
+    type: text
+    influence_conversation: false
+    auto_fill: false
+  date_time:
+    type: text
+    influence_conversation: false
+  location_city:
+    type: text
+    influence_conversation: true
+
+
+
+responses:
+  utter_answer_greet:
+    - text: "嘿！最近怎样?"
+    - text: 请问我可以帮到您吗？
+    - text: 很高兴为您服务。
+    - text: 请问我可以为您做什么。
+  utter_answer_affirm:
+    - text: 主人还有什么吩咐
+    - text: 好的
+    - text: 明白了
+  utter_answer_deny:
+    - text: 有什么问题吗？
+    - text: 怎么了，主人？
+  utter_ask_continue:
+    - text: 请问您还要继续吗?
+    - text: "要继续吗?"
+  utter_noworries:
+    - text: 不用客气 :)
+    - text: 没事啦
+    - text: 不客气哈，都是老朋友了 :)
+  utter_answer_thanks:
+    - text: 不用客气
+    - text: 这是我应该做的，主人
+
+  utter_cheer_up:
+    - text: "让我们来庆祝一下！"
+      image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+    - text: "有帮到你吗?"
+
+  utter_happy:
+    - text: "好的，继续加油！"
+  utter_chitchat:
+    - text: 您这是在尬聊吗？
+    - text: 没听懂你在说什么？
+    - text: 你说什么就是什么吧？
+
+  utter_answer_goodbye:
+    - text: "Bye"
+    - text: "拜"
+    - text: 再见
+    - text: 再见了
+    - text: 后会有期
+    - text: 下次再见
+    - text: 期待下次再见！
+
+  utter_iamabot:
+    - text: "我是基于 Rasa 的机器人🤖"
+
+  utter_submit:
+    - text: "已经完成！"
+  utter_slots_values:
+    - text: "我将使用以下参数运行一个餐厅搜索:\n
+               - 餐厅类别: {cuisine}\n
+               - 人数: {num_people}\n
+               - 坐外面: {outdoor_seating}\n
+               - 偏好: {preferences}\n
+               - 反馈: {feedback}"
+
+  utter_ask_cuisine:
+    - text: "哪种店?"
+  utter_ask_num_people:
+    - text: "几位呢?"
+  utter_ask_outdoor_seating:
+    - text: "要坐在外面吗?"
+  utter_ask_preferences:
+    - text: "有什么偏好吗？"
+  utter_ask_feedback:
+    - text: "您觉得体验如何？"
+  utter_ask_搜动漫_form_img:
+    - text: "请输入图片url或者直接上传图片"
+  utter_wrong_cuisine:
+    - text: "店铺类型不在数据库中，请换一种餐种"
+  utter_wrong_num_people:
+    - text: "人数应该是一个正整数，请再试一次"
+  utter_wrong_outdoor_seating:
+    - text: "无法将输入值转换为布尔值，请重试"
+  utter_url错误:
+    - text: "url有误，请检查后再重试～"
+  utter_试试按钮:
+    - text: "这个按钮有两个功能，你可以试试："
+      buttons:
+        - title: "吸猫"
+          payload: '/看图片{{"look_img":"猫"}}'
+        - title: "你是不是bot"
+          payload: "/bot_challenge"
+  utter_answer_whoareyou:
+    - text: 我是您的智能助手
+    - text: 您可以称呼我贾维斯
+  utter_answer_whattodo:
+    - text: 很高兴为您服务，我目前可以用来测试测试导航功能和播放音乐
+    - text: 我的功能有限，希望不要难为我。
+  utter_default:
+    - text: 很抱歉我没听懂，请换种说法
+    - text: 对不起，我暂时没能理解您的意思
+    - text: 不好意思，请再说一遍吧
+    - text: 我还在努力学习理解您的意思
+    - text: 我没听懂您的意思
+    - text: 这个功能我还在学习
+    - text: "不好意思，你这个问题太高深啦。可以在 issue 中提问哦，切换为更智能的 AI！"
+  utter_ask_date_time:
+    - text: 请问您要查询哪一天的天气？
+    - text: 请告诉我要查询哪一天的天气
+  utter_ask_location_city:
+    - text: 请问您要查下哪里的天气？
+    - text: 请告诉要查询哪个城市的天气
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
